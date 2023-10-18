@@ -1,3 +1,5 @@
+from django.contrib.sites import requests
+from django.http import HttpResponseRedirect
 from django.shortcuts import get_object_or_404, redirect
 from django.urls import reverse_lazy, reverse
 from django.views import generic, View
@@ -23,7 +25,7 @@ class TaskUpdateView(generic.UpdateView):
 
 
 class TaskStatusView(View):
-    def post(self, request, pk):
+    def post(self, request, pk: int = id(__obj=Task)) -> HttpResponseRedirect:
         task = get_object_or_404(Task, pk=pk)
         task.done_mark = not task.done_mark
         task.save()
