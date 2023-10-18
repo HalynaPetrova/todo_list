@@ -5,7 +5,6 @@ from django.views import generic, View
 from todo.models import Tag, Task
 
 
-# Create your views here.
 class TaskListView(generic.ListView):
     template_name = "todo/task_list.html"
     queryset = Task.objects.all()
