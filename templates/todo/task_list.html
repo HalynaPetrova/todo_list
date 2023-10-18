@@ -34,7 +34,7 @@
         {% endif %}
         <br>
       </p>
-      {% for tag in task.tags.all %}
+      {% for tag in task.tasks.all %}
         Tags: {{ tag.name }}
       {% endfor %}
         <a href="{% url "todo:task-update" pk=task.id %} ">Update</a>
