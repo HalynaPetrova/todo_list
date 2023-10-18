@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <h1>
+      TODO list
+      <a href="{% url 'todo:task-create' %}" class="btn btn-primary link-to-page">
+        Add task
+      </a>
+    </h1>
+  <br><br>
+    {% for task in task_list %}
+      <p>
+        <b>
+          {{ task.content }}
+          {% if task.done_mark %}
+            <span class="text-success">Done</span>
+            <form method="post" action="{% url 'todo:status-task' task.pk %}">
+              {% csrf_token %}
+              <button class="btn btn-secondary link-to-page" type="submit">undo</button>
+            </form>
+            {% else %}
+            <span class="text-danger">Not done</span>
+            <form method="post" action="{% url 'todo:status-task' task.pk %}">
+              {% csrf_token %}
+              <button class="btn btn-success link-to-page" type="submit">Completed</button>
+            </form>
+          {% endif %}
+        </b>
+      </p>
+      <p>
+        Created: {{ task.datetime }}
+        {% if task.deadline %}
+          <span class="text-danger"> Deadline: {{ task.deadline }}</span>
+        {% endif %}
+        <br>
+      </p>
+      {% for tag in task.tags.all %}
+        Tags: {{ tag.name }}
+      {% endfor %}
+        <a href="{% url "todo:task-update" pk=task.id %} ">Update</a>
+        <a href="{% url "todo:task-delete" pk=task.id %} ">Delete</a>
+      <hr>
+    {% endfor %}
+{% endblock %}
